@@ -10,11 +10,15 @@ import java.util.Map;
 
 public class ControllerInitializer {
     private List<Class> controllerList = new ArrayList<>();
-    private Map<String, Class> mappingMap = new HashMap<>();
+    private static Map<String, Object[]> mappingMap = new HashMap<>();
 
     public ControllerInitializer add(Class clazz) {
         controllerList.add(clazz);
         return this;
+    }
+
+    public static Map<String, Object[]> getMappingMap() {
+        return mappingMap;
     }
 
     public void init() {
@@ -33,9 +37,15 @@ public class ControllerInitializer {
                 boolean isMappingMethod = method.isAnnotationPresent(RestMapping.class);
                 if (isMappingMethod) {
                     RestMapping restMapping = method.getAnnotation(RestMapping.class);
-                    String[] value = restMapping.value();
+                    String[] paths = restMapping.value();
 
+                    for (String path : paths) {
+                        Object[] clazzAndMethod = new Object[2];
+                        clazzAndMethod[0] = clazz;
+                        clazzAndMethod[1] = method;
 
+                        mappingMap.put(path, clazzAndMethod);
+                    }
                 }
             }
 
