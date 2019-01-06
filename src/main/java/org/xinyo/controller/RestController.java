@@ -1,20 +1,15 @@
 package org.xinyo.controller;
 
 import com.google.gson.Gson;
+import org.xinyo.annotation.Param;
 import org.xinyo.annotation.RestMapping;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.xinyo.entity.Person;
 
 public class RestController {
 
     @RestMapping("/data")
-    public String data(){
-        Map<String, Object> map = new HashMap<>();
-        map.put("name", "张三");
-        map.put("age", 21);
-        map.put("phone", "15212345678");
+    public String data(@Param("name") String name, Person person){
         Gson gson = new Gson();
-        return gson.toJson(map);
+        return gson.toJson(person);
     }
 }

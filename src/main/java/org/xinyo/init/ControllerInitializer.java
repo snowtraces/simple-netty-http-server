@@ -3,6 +3,7 @@ package org.xinyo.init;
 import org.xinyo.annotation.RestMapping;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +41,10 @@ public class ControllerInitializer {
                     String[] paths = restMapping.value();
 
                     for (String path : paths) {
-                        Object[] clazzAndMethod = new Object[2];
+                        Object[] clazzAndMethod = new Object[3]; // clazz, method, params
                         clazzAndMethod[0] = clazz;
                         clazzAndMethod[1] = method;
+                        clazzAndMethod[2] = method.getParameters();
 
                         mappingMap.put(path, clazzAndMethod);
                     }
