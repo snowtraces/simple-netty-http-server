@@ -5,13 +5,16 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.xinyo.controller.RestController;
+import org.xinyo.init.BaseInitializer;
 import org.xinyo.init.ControllerInitializer;
+import org.xinyo.service.Service;
 
 public class HttpServer {
     public static void main(String[] args) throws Exception{
-        ControllerInitializer controllerInitializer = new ControllerInitializer();
-        controllerInitializer
-                .add(RestController.class)
+        BaseInitializer initializer = new BaseInitializer();
+        initializer
+                .addController(RestController.class)
+                .addService(Service.class)
                 .init();
 
 

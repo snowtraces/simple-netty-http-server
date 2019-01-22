@@ -3,6 +3,7 @@ package org.xinyo.netty;
 import io.netty.handler.codec.http.FullHttpRequest;
 import org.xinyo.annotation.Param;
 import org.xinyo.init.ControllerInitializer;
+import org.xinyo.util.BeanUtils;
 import org.xinyo.util.HttpUtils;
 
 import java.lang.reflect.Field;
@@ -31,7 +32,7 @@ public class HttpServerDispatchHandler {
 
                 Object[] methodParams = generateParams(parameters, params.getParams());
 
-                result = (String) method.invoke(clazz.newInstance(), methodParams);
+                result = (String) method.invoke(BeanUtils.getBean(clazz), methodParams);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,6 +52,7 @@ public class HttpServerDispatchHandler {
                 // 1. primitive / array
                 Param pName = p.getAnnotation(Param.class);
                 if (pName == null) {
+                    // 默认情况下拿不到参数名称，只能通过注解解决
                     throw new RuntimeException("annotation @Param does not exist!");
                 }
                 String name = pName.value();

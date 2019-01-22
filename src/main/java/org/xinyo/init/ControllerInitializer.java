@@ -1,9 +1,9 @@
 package org.xinyo.init;
 
 import org.xinyo.annotation.RestMapping;
+import org.xinyo.util.BeanUtils;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +15,11 @@ public class ControllerInitializer {
 
     public ControllerInitializer add(Class clazz) {
         controllerList.add(clazz);
+        return this;
+    }
+
+    public ControllerInitializer add(List<Class> clazzs) {
+        controllerList.addAll(clazzs);
         return this;
     }
 
@@ -50,8 +55,6 @@ public class ControllerInitializer {
                     }
                 }
             }
-
-
         }
     }
 
